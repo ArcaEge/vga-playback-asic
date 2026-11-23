@@ -4,7 +4,7 @@ OUTPUT := bitstream
 PACKAGE := CABGA256
 FPGA_SIZE ?= 25k
 
-all: debug
+all: clean debug
 
 %.json: $(VERILOG_SOURCES)
 	rm -f $(OUTPUT).bit $(OUTPUT).config $(OUTPUT).json
@@ -19,7 +19,7 @@ all: debug
 
 build: $(OUTPUT).bit
 
-debug: build
+debug: clean build
 	openFPGALoader -b icepi-zero $(OUTPUT).bit
 
 install: build
