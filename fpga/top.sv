@@ -2,7 +2,12 @@
 
 module top (
 	output logic [4:0] led,
-	input  wire        clk
+    output wire red,
+    output wire green,
+    output wire blue,
+    output wire hsync,
+    output wire vsync,
+	input  wire clk
 );
     // I/O
     wire [7:0] ui_in;
@@ -13,6 +18,9 @@ module top (
     wire ena;
     wire clki;
     wire rst_n;
+
+    // VGA
+    assign {vsync, hsync, blue, green, red} = uo_out[4:0];
 	
     clock clck (.clk, .clki);
 

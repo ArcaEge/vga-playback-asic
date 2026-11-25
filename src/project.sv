@@ -4,6 +4,7 @@
  */
 
 `default_nettype none
+`include "vga.sv"
 
 module tt_um_arcaege_vgaplay (
     input  wire [7:0] ui_in,    // Dedicated inputs
@@ -21,6 +22,11 @@ module tt_um_arcaege_vgaplay (
   assign uio_out[7:0] = 0;
   assign uio_oe  = 0;
 
+  wire vsync, hsync, blue, green, red;
+  assign {vsync, hsync, blue, green, red} = uo_out[4:0];
+
+  assign vsync = 1;
+
   logic [4:0] led;
   // assign uo_out[4:0] = led;
 
@@ -28,6 +34,8 @@ module tt_um_arcaege_vgaplay (
 	always_ff @(posedge clk) begin
 		led <= led + 1;
 	end
+
+  vga display (.clk);
 
   // List all unused inputs to prevent warnings
   wire _unused = &{ena, clk, rst_n, 1'b0};
