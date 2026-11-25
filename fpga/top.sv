@@ -2,11 +2,7 @@
 
 module top (
 	output logic [4:0] led,
-    output wire red,
-    output wire green,
-    output wire blue,
-    output wire hsync,
-    output wire vsync,
+    output wire red, green, blue, vsync, hsync,
 	input  wire clk
 );
     // I/O
@@ -24,20 +20,17 @@ module top (
 	
     clock clck (.clk, .clki);
 
-    assign led = uo_out[4:0];
+    assign led = 5'b0;
 
     tt_um_arcaege_vgaplay project (.ui_in, .uo_out, .uio_in, .uio_out, .uio_oe, .ena, .clk(clki), .rst_n);
 endmodule
 
-module clock (input wire clk, output wire clki);
-    // Clock (50MHz >> 1 = 25MHz)
-	logic [1:0] clkb;
-	assign clki = clkb[1];
-
+// Clock (50MHz >> 1 = 25MHz)
+module clock (input wire clk, output logic clki);
 	// Count the clocks
-	always @(posedge clk) clkb <= clkb + 1'b1;
+	always @(posedge clk) clki = clki + 1'b1;
 
 	initial begin
-		clkb = 0;
+		clki = 0;
 	end
 endmodule
