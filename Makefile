@@ -13,7 +13,12 @@ harden:
 	./tt/tt_tool.py --pdk $(PDK) --harden
 
 view:
+	xhost +local:
 	./tt/tt_tool.py --pdk $(PDK) --open-in-openroad
+
+kview:
+	xhost +local:
+	./tt/tt_tool.py --pdk $(PDK) --open-in-klayout
 
 fpga-%:
 	$(MAKE) -C fpga $*
