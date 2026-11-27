@@ -16,13 +16,16 @@ module tt_um_arcaege_vgaplay (
     input  wire       clk,      // clock
     input  wire       rst_n     // reset_n - low to reset
 );
-
-  // All output pins must be assigned. If not used, assign to 0.
-  assign uio_out[7:0] = 0;
-  assign uio_oe  = 0;
-
+  // Signal wires
   wire vsync, hsync, blue, green, red;
-  assign uo_out[7:0] = {3'b000, vsync, hsync, blue, green, red};
+  wire qspi_cs, qspi_clk, qspi_oe;
+  wire [3:0] qspi_io_out, qspi_io_in;
+
+  // Map wires to pins
+  assign uo_out = {3'b0, vsync, hsync, blue, green, red};
+  assign uio_out = {4'b0, qspi_io_out};
+  assign uio_oe = {4'b0, {4{qspi_oe}}};
+  assign qspi_io_in = uio_in[3:0];
 
   // Add one to the led register
 	always_ff @(posedge clk) begin
