@@ -22,7 +22,7 @@ module tt_um_arcaege_vgaplay (
   wire [3:0] qspi_io_out, qspi_io_in;
 
   // Map wires to pins
-  assign uo_out = {3'b0, vsync, hsync, blue, green, red};
+  assign uo_out = {1'b0, qspi_clk, qspi_cs, vsync, hsync, blue, green, red};
   assign uio_out = {4'b0, qspi_io_out};
   assign uio_oe = {4'b0, {4{qspi_oe}}};
   assign qspi_io_in = uio_in[3:0];

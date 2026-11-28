@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2026 Arca Cengiz
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 module vga (
     output logic red, green, blue, vsync, hsync,
     input wire clk
@@ -59,4 +64,5 @@ module vga (
     assign red = (h_counter < 320) && rgb_enabled;
     assign green = (v_counter[4] & h_counter[4]) && rgb_enabled;
     assign blue = (v_counter < 240) && rgb_enabled;
+
 endmodule

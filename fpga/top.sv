@@ -3,6 +3,9 @@
 module top (
 	output logic [4:0] led,
     output wire red, green, blue, vsync, hsync,
+    inout wire [3:0] qspi_io,
+    output wire qspi_cs,
+    output wire qspi_clk,
 	input  wire clk
 );
     // I/O
@@ -17,6 +20,17 @@ module top (
 
     // VGA
     assign {vsync, hsync, blue, green, red} = uo_out[4:0];
+
+    // QSPI
+    assign qspi_clk = uio_out[6];
+    assign qspi_cs = uio_out[5];
+    assign uio_in[3:0] = qspi_io;
+    genvar i;
+    generate
+        for (i = 0; i <= 3; i++) begin : g_qspi_io
+            assign qspi_io[i] = uio_oe[i] ? uio_out[i] : 'z;
+        end
+    endgenerate
 	
     clock clck (.clk, .clki);
 
