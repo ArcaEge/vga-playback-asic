@@ -20,13 +20,13 @@ module tt_um_arcaege_vgaplay (
   // Signal wires
   wire vsync, hsync, blue, green, red;
   wire vga_clk;
-  wire qspi_cs, qspi_clk, qspi_oe;
-  wire [3:0] qspi_io_out, qspi_io_in;
+  wire qspi_cs, qspi_clk;
+  wire [3:0] qspi_io_out, qspi_io_in, qspi_oe;
 
   // Map wires to pins
   assign uo_out = {1'b0, qspi_clk, qspi_cs, vsync, hsync, blue, green, red};
   assign uio_out = {4'b0, qspi_io_out};
-  assign uio_oe = {4'b0, {4{qspi_oe}}};
+  assign uio_oe = {4'b0, qspi_oe};
   assign qspi_io_in = uio_in[3:0];
 
   // Add one to the led register
