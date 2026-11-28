@@ -22,8 +22,8 @@ module top (
     assign {vsync, hsync, blue, green, red} = uo_out[4:0];
 
     // QSPI
-    assign qspi_clk = uio_out[6];
-    assign qspi_cs = uio_out[5];
+    assign qspi_clk = uo_out[6];
+    assign qspi_cs = uo_out[5];
     assign uio_in[3:0] = qspi_io;
     genvar i;
     generate

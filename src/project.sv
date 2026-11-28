@@ -5,6 +5,7 @@
 
 `default_nettype none
 `include "./vga.sv"
+`include "./qspi.sv"
 
 module tt_um_arcaege_vgaplay (
     input  wire [7:0] ui_in,    // Dedicated inputs
@@ -33,6 +34,7 @@ module tt_um_arcaege_vgaplay (
 	end
 
   vga display (.red, .green, .blue, .hsync, .vsync, .clk);
+  qspi flash (.qspi_io_out, .qspi_io_in, .qspi_cs, .qspi_clk, .qspi_oe, .clk);
 
   // List all unused inputs to prevent warnings
   wire _unused = &{ena, rst_n, 1'b0};
