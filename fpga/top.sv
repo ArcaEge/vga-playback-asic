@@ -32,19 +32,20 @@ module top (
         end
     endgenerate
 	
-    clock clck (.clk, .clki);
+    // clock clck (.clk, .clki);
+    assign clki = clk;
 
     assign led = 5'b0;
 
     tt_um_arcaege_vgaplay project (.ui_in, .uo_out, .uio_in, .uio_out, .uio_oe, .ena, .clk(clki), .rst_n);
 endmodule
 
-// Clock (50MHz >> 1 = 25MHz)
-module clock (input wire clk, output logic clki);
-	// Count the clocks
-	always @(posedge clk) clki = clki + 1'b1;
+// // Clock (50MHz >> 1 = 25MHz)
+// module clock (input wire clk, output logic clki);
+// 	// Count the clocks
+// 	always @(posedge clk) clki = clki + 1'b1;
 
-	initial begin
-		clki = 0;
-	end
-endmodule
+// 	initial begin
+// 		clki = 0;
+// 	end
+// endmodule

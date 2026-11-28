@@ -19,6 +19,7 @@ module tt_um_arcaege_vgaplay (
 );
   // Signal wires
   wire vsync, hsync, blue, green, red;
+  wire vga_clk;
   wire qspi_cs, qspi_clk, qspi_oe;
   wire [3:0] qspi_io_out, qspi_io_in;
 
@@ -33,10 +34,22 @@ module tt_um_arcaege_vgaplay (
 		// led <= led + 1;
 	end
 
-  vga display (.red, .green, .blue, .hsync, .vsync, .clk);
+  clock clck (.clk, .clki(vga_clk));
+
+  vga display (.red, .green, .blue, .hsync, .vsync, .clk(vga_clk));
   qspi flash (.qspi_io_out, .qspi_io_in, .qspi_cs, .qspi_clk, .qspi_oe, .clk);
 
   // List all unused inputs to prevent warnings
   wire _unused = &{ena, rst_n, 1'b0};
 
+endmodule
+
+// Clock (50MHz >> 1 = 25MHz)
+module clock (input wire clk, output logic clki);
+	// Count the clocks
+	always @(posedge clk) clki = clki + 1'b1;
+
+	initial begin
+		clki = 0;
+	end
 endmodule
